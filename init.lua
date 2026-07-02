@@ -175,9 +175,20 @@ vim.api.nvim_create_autocmd('VimEnter', {
 -- Auto-install external tools not available in Mason's registry
 --   Only runs if the tool is missing AND curl is available
 vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Install external tools (rustfmt, mago, opencode) if missing',
+  desc = 'Install external tools (phpantom, rustfmt, mago, opencode) if missing',
   once = true,
   callback = function()
+    -- PHPantom (PHP LSP) — install via cargo if Rust toolchain is available
+    if vim.fn.executable('phpantom_lsp') == 0 and vim.fn.executable('cargo') ~= 0 then
+      vim.notify('Installing PHPantom (PHP LSP)...')
+      vim.fn.jobstart({ 'cargo', 'install', 'phpantom_lsp', '--locked' }, {
+        on_exit = function(_, code)
+          vim.notify(code == 0 and 'PHPantom installed!' or 'PHPantom install failed — see :messages',
+            code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
+        end,
+      })
+    end
+
     if vim.fn.executable('curl') == 0 then return end
 
     -- rustfmt (Rust formatter) — install via rustup if Rust toolchain is available
@@ -688,8 +699,8 @@ require('lazy').setup({
           },
         },
 
-        -- PHP: phpactor — a fully-featured PHP LSP (available in Mason)
-        phpactor = {},
+        -- PHP: PHPantom — a fast Rust-based PHP LSP (not in Mason; auto-installed via cargo)
+        phpantom = {},
 
         -- Rust
         rust_analyzer = {},
@@ -733,6 +744,8 @@ require('lazy').setup({
       ensure_installed = vim.tbl_map(function(name)
         return lsp_to_mason[name] or name
       end, ensure_installed)
+      -- Exclude servers not available in Mason (they're auto-installed via the VimEnter hook)
+      ensure_installed = vim.tbl_filter(function(name) return name ~= 'phpantom' end, ensure_installed)
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua

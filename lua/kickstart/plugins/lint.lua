@@ -18,9 +18,6 @@ return {
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
 
-        -- PHP
-        php = { 'mago' },
-
         -- JavaScript / TypeScript / Vue
         javascript = { 'eslint_d' },
         typescript = { 'eslint_d' },
@@ -36,6 +33,11 @@ return {
         -- go = { 'golangci-lint' },
         -- rust = { 'clippy' },
       }
+
+      -- PHP — only set if mago binary is available (auto-installed on VimEnter)
+      if vim.fn.executable('mago') ~= 0 then
+        lint.linters_by_ft.php = { 'mago_lint' }
+      end
 
       -- Run linter on BufEnter, BufWritePost, and InsertLeave
       local lint_augroup = vim.api.nvim_create_augroup('nvim-lint', { clear = true })

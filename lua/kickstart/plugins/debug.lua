@@ -47,7 +47,7 @@ return {
         'delve',              -- Go
         'codelldb',           -- Rust
         'js-debug-adapter',   -- JavaScript / TypeScript
-        'php-debug',          -- PHP
+        'php-debug-adapter',  -- PHP
       },
     }
 

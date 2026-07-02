@@ -33,15 +33,7 @@ Personal Neovim configuration for full-stack development with **PHP**, **Rust**,
 ## Installation
 
 ```bash
-# Backup existing config (if any)
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-
-# Clone this repo
-cd ~/.config && git clone <your-repo-url> nvim
-
-# Start Neovim — everything auto-installs
-nvim
+git clone git@github.com:denzyldick/nvim.git ~/.config/nvim && nvim
 ```
 
 ### Optional: Opencode CLI

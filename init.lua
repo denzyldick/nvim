@@ -645,8 +645,8 @@ require('lazy').setup({
           },
         },
 
-        -- PHP: PHPantom — a fast Rust-based PHP LSP
-        phpantom = {},
+        -- PHP: phpactor — a fully-featured PHP LSP (available in Mason)
+        phpactor = {},
 
         -- Rust
         rust_analyzer = {},

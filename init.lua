@@ -172,20 +172,32 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
--- Install Mago (PHP formatter/linter) if missing — uses the official shell script
+-- Auto-install external tools not available in Mason's registry
+--   Only runs if the tool is missing AND curl is available
 vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Install Mago PHP toolchain if missing',
+  desc = 'Install external tools (mago, opencode) if missing',
   once = true,
   callback = function()
-    if vim.fn.executable('mago') == 0 and vim.fn.executable('curl') ~= 0 then
+    if vim.fn.executable('curl') == 0 then return end
+
+    -- Mago (PHP formatter/linter) — install via official shell script
+    if vim.fn.executable('mago') == 0 then
       vim.notify('Installing Mago (PHP formatter/linter)...')
       vim.fn.jobstart({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash' }, {
         on_exit = function(_, code)
-          if code == 0 then
-            vim.notify('Mago installed successfully!', vim.log.levels.INFO)
-          else
-            vim.notify('Mago installation failed — see :messages', vim.log.levels.ERROR)
-          end
+          vim.notify(code == 0 and 'Mago installed!' or 'Mago install failed — see :messages',
+            code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
+        end,
+      })
+    end
+
+    -- opencode CLI (AI assistant) — install via official script
+    if vim.fn.executable('opencode') == 0 then
+      vim.notify('Installing opencode CLI (AI assistant)...')
+      vim.fn.jobstart({ 'bash', '-c', 'curl -fsSL https://opencode.ai/install | bash' }, {
+        on_exit = function(_, code)
+          vim.notify(code == 0 and 'opencode CLI installed!' or 'opencode install failed — see :messages',
+            code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
         end,
       })
     end

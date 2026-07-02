@@ -172,6 +172,26 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
+-- Install Mago (PHP formatter/linter) if missing — uses the official shell script
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Install Mago PHP toolchain if missing',
+  once = true,
+  callback = function()
+    if vim.fn.executable('mago') == 0 and vim.fn.executable('curl') ~= 0 then
+      vim.notify('Installing Mago (PHP formatter/linter)...')
+      vim.fn.jobstart({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash' }, {
+        on_exit = function(_, code)
+          if code == 0 then
+            vim.notify('Mago installed successfully!', vim.log.levels.INFO)
+          else
+            vim.notify('Mago installation failed — see :messages', vim.log.levels.ERROR)
+          end
+        end,
+      })
+    end
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -693,8 +713,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua
-        'php-cs-fixer', -- PHP (formatter)
-        'phpstan',      -- PHP (linter)
+        -- Note: mago (PHP formatter/linter) is auto-installed via curl
         'rustfmt',      -- Rust
         'prettier',     -- JavaScript / TypeScript / Vue
         'eslint_d',     -- JavaScript / TypeScript / Vue (linter)
@@ -752,7 +771,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        php = { 'php_cs_fixer' },
+        php = { 'mago' },
         rust = { 'rustfmt' },
         javascript = { { 'prettierd', 'prettier' }, stop_after_first = true },
         typescript = { { 'prettierd', 'prettier' }, stop_after_first = true },

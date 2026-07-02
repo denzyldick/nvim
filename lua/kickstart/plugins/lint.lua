@@ -19,7 +19,7 @@ return {
         markdown = { 'markdownlint' },
 
         -- PHP
-        php = { 'phpstan' },
+        php = { 'mago' },
 
         -- JavaScript / TypeScript / Vue
         javascript = { 'eslint' },

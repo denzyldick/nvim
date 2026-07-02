@@ -680,6 +680,16 @@ require('lazy').setup({
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+      -- Map lspconfig server names → Mason registry package names where they differ
+      local lsp_to_mason = {
+        lua_ls = 'lua-language-server',
+        rust_analyzer = 'rust-analyzer',
+        ts_ls = 'typescript-language-server',
+        volar = 'vue-language-server',
+      }
+      ensure_installed = vim.tbl_map(function(name)
+        return lsp_to_mason[name] or name
+      end, ensure_installed)
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua

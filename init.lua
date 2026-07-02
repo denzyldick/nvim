@@ -693,7 +693,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua
-        'mago',         -- PHP (formatter + linter)
+        'php-cs-fixer', -- PHP (formatter)
+        'phpstan',      -- PHP (linter)
         'rustfmt',      -- Rust
         'prettier',     -- JavaScript / TypeScript / Vue
         'eslint_d',     -- JavaScript / TypeScript / Vue (linter)
@@ -751,7 +752,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        php = { 'mago' },
+        php = { 'php_cs_fixer' },
         rust = { 'rustfmt' },
         javascript = { { 'prettierd', 'prettier' }, stop_after_first = true },
         typescript = { { 'prettierd', 'prettier' }, stop_after_first = true },

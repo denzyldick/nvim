@@ -18,8 +18,8 @@ return {
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
 
-        -- PHP — mago acts as both formatter AND linter
-        php = { 'mago' },
+        -- PHP
+        php = { 'phpstan' },
 
         -- JavaScript / TypeScript / Vue
         javascript = { 'eslint' },

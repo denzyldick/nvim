@@ -175,10 +175,21 @@ vim.api.nvim_create_autocmd('VimEnter', {
 -- Auto-install external tools not available in Mason's registry
 --   Only runs if the tool is missing AND curl is available
 vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Install external tools (mago, opencode) if missing',
+  desc = 'Install external tools (rustfmt, mago, opencode) if missing',
   once = true,
   callback = function()
     if vim.fn.executable('curl') == 0 then return end
+
+    -- rustfmt (Rust formatter) — install via rustup if Rust toolchain is available
+    if vim.fn.executable('rustfmt') == 0 and vim.fn.executable('rustup') ~= 0 then
+      vim.notify('Installing rustfmt...')
+      vim.fn.jobstart({ 'rustup', 'component', 'add', 'rustfmt' }, {
+        on_exit = function(_, code)
+          vim.notify(code == 0 and 'rustfmt installed!' or 'rustfmt install failed — see :messages',
+            code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
+        end,
+      })
+    end
 
     -- Mago (PHP formatter/linter) — install via official shell script
     if vim.fn.executable('mago') == 0 then
@@ -725,8 +736,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua
-        -- Note: mago (PHP formatter/linter) is auto-installed via curl
-        'rustfmt',      -- Rust
+        -- Note: rustfmt and mago are auto-installed via the VimEnter hook below
         'prettier',     -- JavaScript / TypeScript / Vue
         'eslint_d',     -- JavaScript / TypeScript / Vue (linter)
         'goimports',    -- Go (imports)

@@ -742,7 +742,7 @@ require('lazy').setup({
         'eslint_d',     -- JavaScript / TypeScript / Vue (linter)
         'goimports',    -- Go (imports)
         'gofumpt',      -- Go (formatting)
-        'markdownlint-cli', -- Markdown
+        'markdownlint', -- Markdown
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

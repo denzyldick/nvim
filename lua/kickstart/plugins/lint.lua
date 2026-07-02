@@ -22,11 +22,11 @@ return {
         php = { 'mago' },
 
         -- JavaScript / TypeScript / Vue
-        javascript = { 'eslint' },
-        typescript = { 'eslint' },
-        javascriptreact = { 'eslint' },
-        typescriptreact = { 'eslint' },
-        vue = { 'eslint' },
+        javascript = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
+        vue = { 'eslint_d' },
 
         -- Add more linters here:
         -- python = { 'pylint' },

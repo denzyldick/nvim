@@ -738,9 +738,11 @@ require('lazy').setup({
         'stylua',       -- Lua
         -- Note: rustfmt and mago are auto-installed via the VimEnter hook below
         'prettier',     -- JavaScript / TypeScript / Vue
+        'prettierd',    -- JavaScript / TypeScript / Vue (faster daemon, tried first)
         'eslint_d',     -- JavaScript / TypeScript / Vue (linter)
         'goimports',    -- Go (imports)
         'gofumpt',      -- Go (formatting)
+        'markdownlint-cli', -- Markdown
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

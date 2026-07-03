@@ -701,7 +701,7 @@ require('lazy').setup({
         },
 
         -- PHP: PHPantom — a fast Rust-based PHP LSP (not in Mason; auto-installed via cargo)
-        phpantom = {},
+        phpantom_lsp = {},
 
         -- Rust
         rust_analyzer = {},
@@ -746,7 +746,7 @@ require('lazy').setup({
         return lsp_to_mason[name] or name
       end, ensure_installed)
       -- Exclude servers not available in Mason (they're auto-installed via the VimEnter hook)
-      ensure_installed = vim.tbl_filter(function(name) return name ~= 'phpantom' end, ensure_installed)
+      ensure_installed = vim.tbl_filter(function(name) return name ~= 'phpantom_lsp' end, ensure_installed)
       vim.list_extend(ensure_installed, {
         -- Formatters (by language — add new ones here as needed)
         'stylua',       -- Lua
@@ -761,22 +761,19 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+        ensure_installed = {},
         automatic_installation = false,
-        handlers = {
-          function(server_name)
-            -- Only set up servers explicitly listed in the `servers` table.
-            -- This prevents stale Mason binaries (e.g. phpactor) from being started.
-            if not servers[server_name] then return end
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        automatic_enable = false,
       }
+
+      -- Enable LSP servers using the Nvim 0.11+ API (vim.lsp.config + vim.lsp.enable)
+      for server_name, server_config in pairs(servers) do
+        if server_config and next(server_config) then
+          server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_config.capabilities or {})
+          vim.lsp.config(server_name, server_config)
+        end
+        vim.lsp.enable(server_name)
+      end
     end,
   },
 

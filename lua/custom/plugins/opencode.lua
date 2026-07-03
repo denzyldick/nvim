@@ -21,5 +21,5 @@ return {
     { '<leader>os', function() require('opencode').select() end, desc = '[O]pencode [S]elect', mode = { 'n', 'x' } },
     { 'go', function() return require('opencode').operator('@this ') end, desc = 'Append range to opencode', expr = true, mode = { 'n', 'x' } },
   },
-  opts = {},
+  -- no setup() needed — plugin is configured via keymaps and opencode.json
 }

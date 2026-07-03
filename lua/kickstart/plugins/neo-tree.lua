@@ -11,13 +11,16 @@ return {
   },
   lazy = false,
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '<leader>e', ':Neotree position=right reveal<CR>', desc = '[E]xplorer', silent = true },
   },
   opts = {
+    default_component_configs = {
+      icon_padding = ' ',
+    },
     filesystem = {
       window = {
         mappings = {
-          ['\\'] = 'close_window',
+          ['<leader>e'] = 'close_window',
         },
       },
     },

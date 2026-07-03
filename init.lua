@@ -205,7 +205,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     -- Mago (PHP formatter/linter) — install via official shell script
     if vim.fn.executable('mago') == 0 then
       vim.notify('Installing Mago (PHP formatter/linter)...')
-      local ok = vim.fn.system({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash' })
+      local ok = vim.fn.system({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash -s -- --install-dir="$HOME/.local/bin"' })
       if vim.v.shell_error == 0 then
         vim.notify('Mago installed!', vim.log.levels.INFO)
       else

@@ -764,6 +764,9 @@ require('lazy').setup({
         automatic_installation = false,
         handlers = {
           function(server_name)
+            -- Only set up servers explicitly listed in the `servers` table.
+            -- This prevents stale Mason binaries (e.g. phpactor) from being started.
+            if not servers[server_name] then return end
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling

@@ -205,12 +205,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
     -- Mago (PHP formatter/linter) — install via official shell script
     if vim.fn.executable('mago') == 0 then
       vim.notify('Installing Mago (PHP formatter/linter)...')
-      vim.fn.jobstart({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash' }, {
-        on_exit = function(_, code)
-          vim.notify(code == 0 and 'Mago installed!' or 'Mago install failed — see :messages',
-            code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
-        end,
-      })
+      local ok = vim.fn.system({ 'bash', '-c', 'curl --proto "=https" --tlsv1.2 -sSf https://carthage.software/mago.sh | bash' })
+      if vim.v.shell_error == 0 then
+        vim.notify('Mago installed!', vim.log.levels.INFO)
+      else
+        vim.notify('Mago install failed: ' .. ok, vim.log.levels.ERROR)
+      end
     end
 
     -- opencode CLI (AI assistant) — install via official script
@@ -811,7 +811,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        php = { 'mago' },
+        php = vim.fn.executable('mago') ~= 0 and { 'mago' } or nil,
         rust = { 'rustfmt' },
         javascript = { { 'prettierd', 'prettier' }, stop_after_first = true },
         typescript = { { 'prettierd', 'prettier' }, stop_after_first = true },

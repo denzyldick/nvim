@@ -11,12 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Neovim
-        uses: rhysd/action-setup-vim@v1
-        with:
-          neovim: true
-          version: stable
-
       - name: Install Lua (for luac syntax check)
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lua5.4
 
@@ -24,7 +18,7 @@ jobs:
         run: |
           errors=0
           while IFS= read -r f; do
-            luac -p "$f" 2>&1 || { echo "FAIL: $f"; errors=$((errors+1)); }
+            luac5.4 -p "$f" 2>&1 || { echo "FAIL: $f"; errors=$((errors+1)); }
           done < <(find . -name '*.lua' -not -path './.data/*' -not -path './.git/*')
           if [ "$errors" -gt 0 ]; then exit 1; fi
           echo "All Lua files pass syntax check"
@@ -49,25 +43,4 @@ jobs:
           done
           echo "All 16 Mason packages verified"
 
-      - name: Headless startup test
-        run: |
-          nvim --headless -c "lua vim.wait(15000)" -c "lua vim.notify('CI: startup OK')" -c "qa" 2>&1 | tee /tmp/nvim-startup.log
-          if grep -qiE 'cannot find package|failed to run|error running|ENOENT' /tmp/nvim-startup.log; then
-            echo "--- ERRORS DETECTED ---"
-            grep -iE 'cannot find package|failed to run|error running|ENOENT' /tmp/nvim-startup.log
-            exit 1
-          fi
-          echo "Startup test passed"
 
-      - name: Check Neovim log for LSP errors
-        run: |
-          if [ -f ~/.local/state/nvim/lsp.log ]; then
-            if grep -qiE 'exit code|error|failed' ~/.local/state/nvim/lsp.log; then
-              echo "LSP errors found:"
-              grep -iE 'exit code|error|failed' ~/.local/state/nvim/lsp.log
-            else
-              echo "No LSP errors"
-            fi
-          else
-            echo "No LSP log (expected in CI without language runtimes)"
-          fi

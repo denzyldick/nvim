@@ -119,6 +119,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Open lazy.nvim plugin manager
 vim.keymap.set('n', '<leader>gg', '<cmd>Lazy<CR>', { desc = '[G]it plugin [G]ui (lazy.nvim)' })
 
+
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -160,6 +162,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('nvim-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+  end,
+})
+
+-- Auto-reload config when saving Lua/Vim files in the config directory
+vim.api.nvim_create_autocmd('BufWritePost', {
+  desc = 'Reload config on save',
+  group = vim.api.nvim_create_augroup('nvim-auto-reload', { clear = true }),
+  pattern = vim.fn.stdpath 'config' .. '/*.{lua,vim}',
+  callback = function()
+    vim.notify('Config saved — sourcing init.lua', vim.log.levels.INFO)
+    vim.cmd('source $MYVIMRC')
   end,
 })
 

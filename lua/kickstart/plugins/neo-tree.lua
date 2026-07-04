@@ -11,7 +11,7 @@ return {
   },
   lazy = false,
   keys = {
-    { '<leader>e', ':Neotree position=right reveal<CR>', desc = '[E]xplorer', silent = true },
+    { '<leader>e', ':Neotree position=left reveal<CR>', desc = '[E]xplorer', silent = true },
   },
   opts = {
     default_component_configs = {
@@ -25,4 +25,17 @@ return {
       },
     },
   },
+  config = function(_, opts)
+    require('neo-tree').setup(opts)
+    vim.api.nvim_create_autocmd('VimEnter', {
+      group = vim.api.nvim_create_augroup('neo-tree-autopen', { clear = true }),
+      desc = 'Open neo-tree on the left on startup',
+      once = true,
+      callback = function()
+        if #vim.fn.argv() == 0 then
+          vim.cmd('Neotree position=left')
+        end
+      end,
+    })
+  end,
 }

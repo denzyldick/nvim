@@ -116,8 +116,13 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- Open lazy.nvim plugin manager
-vim.keymap.set('n', '<leader>l', '<cmd>Lazy<CR>', { desc = '[L]azy.nvim' })
+-- Lazy.nvim commands
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = '[L]azy [O]pen' })
+vim.keymap.set('n', '<leader>lc', '<cmd>Lazy check<CR>', { desc = '[L]azy [C]heck updates' })
+vim.keymap.set('n', '<leader>lu', '<cmd>Lazy update<CR>', { desc = '[L]azy [U]pdate' })
+vim.keymap.set('n', '<leader>ls', '<cmd>Lazy sync<CR>', { desc = '[L]azy [S]ync' })
+vim.keymap.set('n', '<leader>lC', '<cmd>Lazy clean<CR>', { desc = '[L]azy [C]lean' })
+vim.keymap.set('n', '<leader>lr', '<cmd>Lazy reload<CR>', { desc = '[L]azy [R]eload' })
 
 -- Open lazygit in a new tab
 vim.keymap.set('n', '<leader>gg', '<cmd>tab term lazygit<CR>', { desc = '[G]it [G]ui (lazygit)' })
@@ -362,6 +367,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>g', group = '[G]it' },
+        { '<leader>l', group = '[L]azy' },
         { '<leader>d', group = '[D]ebug' },
         { '<leader>o', group = '[O]pencode' },
         { '<leader>u', group = '[U]I' },

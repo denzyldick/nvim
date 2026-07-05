@@ -54,15 +54,29 @@ jobs:
 
       - name: Check for duplicate keymaps
         run: |
-          errors=0
-          dups=$(grep -rohP "<leader>\w+" --include='*.lua' . \
-            | sort | uniq -d)
+          dups=$(
+            {
+              # vim.keymap.set calls
+              grep -rnP "vim\.keymap\.set\(['\"]([nvisox])['\"],\s*'<leader>\w+'" \
+                --include='*.lua' . 2>/dev/null \
+                | grep -oP "'<leader>\w+'" \
+                | sort
+              # lazy.nvim keys tables (skip comments, which-key metadata, gitsigns)
+              grep -rnP "'<leader>\w+'" --include='*.lua' . 2>/dev/null \
+                | grep -v "vim.keymap.set" \
+                | sed 's/^[^:]*:[^:]*://' \
+                | grep -vP '^\s*(--|\[)' \
+                | grep -vP "(icon|group)\s*=" \
+                | grep -v "gitsigns" \
+                | grep -oP "'<leader>\w+'" \
+                | sort
+            } | sort | uniq -d
+          )
           if [ -n "$dups" ]; then
             echo "Duplicate leader keymaps found:"
             echo "$dups"
-            errors=$((errors+1))
+            exit 1
           fi
-          [ "$errors" -eq 0 ] || exit 1
           echo "No duplicate leader keymaps"
 
       - name: Validate git hooks

@@ -2,7 +2,7 @@
 -- Diffview: side-by-side diffs and merge conflict resolution
 --
 -- Keymaps:
---   <leader>gg  Open Neogit status
+--   <leader>gs  Open Neogit status
 --   <leader>ga  Git add current file
 --   <leader>gd  Open Diffview (diffs, merge conflicts)
 --
@@ -20,7 +20,7 @@ return {
       'sindrets/diffview.nvim',
     },
     keys = {
-      { '<leader>gg', function() require('neogit').open() end, desc = '[G]it [G] status (Neogit)' },
+      { '<leader>gs', function() require('neogit').open() end, desc = '[G]it [S]tatus (Neogit)' },
       { '<leader>ga', function() require('neogit').action('stage_all') end, desc = '[G]it [A]dd all' },
     },
     opts = {

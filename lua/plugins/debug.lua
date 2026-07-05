@@ -25,13 +25,13 @@ return {
     'leoluz/nvim-dap-go',
   },
   keys = {
-    { '<F5>', function() require('dap').continue() end, desc = '[D]ebug: Start/Continue', icon = '󰑤' },
-    { '<F1>', function() require('dap').step_into() end, desc = '[D]ebug: Step Into', icon = '󰆤' },
-    { '<F2>', function() require('dap').step_over() end, desc = '[D]ebug: Step Over', icon = '󰆣' },
-    { '<F3>', function() require('dap').step_out() end, desc = '[D]ebug: Step Out', icon = '󰆥' },
-    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = '[D]ebug [B]reakpoint', icon = '󰃤' },
-    { '<leader>dB', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = '[D]ebug [B]reakpoint (conditional)', icon = '󰃤' },
-    { '<F7>', function() require('dapui').toggle() end, desc = '[D]ebug: Toggle UI', icon = '󰂤' },
+    { '<F5>', function() require('dap').continue() end, desc = '[D]ebug: Start/Continue' },
+    { '<F1>', function() require('dap').step_into() end, desc = '[D]ebug: Step Into' },
+    { '<F2>', function() require('dap').step_over() end, desc = '[D]ebug: Step Over' },
+    { '<F3>', function() require('dap').step_out() end, desc = '[D]ebug: Step Out' },
+    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = '[D]ebug [B]reakpoint' },
+    { '<leader>dB', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = '[D]ebug [B]reakpoint (conditional)' },
+    { '<F7>', function() require('dapui').toggle() end, desc = '[D]ebug: Toggle UI' },
   },
   config = function()
     local dap = require 'dap'

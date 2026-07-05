@@ -30,6 +30,18 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Use tracked git hooks from .githooks/ (pre-push checks)
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Configure git hooks path',
+  once = true,
+  callback = function()
+    local current = vim.fn.system('git config --local core.hooksPath 2>/dev/null')
+    if vim.v.shell_error ~= 0 or vim.trim(current) ~= '.githooks' then
+      vim.fn.system { 'git', 'config', '--local', 'core.hooksPath', '.githooks' }
+    end
+  end,
+})
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 

@@ -65,6 +65,12 @@ jobs:
           [ "$errors" -eq 0 ] || exit 1
           echo "No duplicate leader keymaps"
 
+      - name: Validate git hooks
+        run: |
+          if command -v bash &>/dev/null; then
+            bash -n .githooks/pre-push && echo "✓ pre-push hook syntax OK"
+          fi
+
   validate:
     runs-on: ubuntu-latest
     steps:

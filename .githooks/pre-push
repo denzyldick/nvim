@@ -1,0 +1,64 @@
+#!/bin/bash
+# Pre-push hook — runs fast local checks before pushing.
+# If any check fails, the push is aborted.
+# Requires: luac5.4 (apt: lua5.4), stylua (optional)
+
+REPO_DIR=$(git rev-parse --show-toplevel)
+cd "$REPO_DIR" || exit 1
+
+errors=0
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+pass() { echo -e "  ${GREEN}✓${NC} $1"; }
+fail() { echo -e "  ${RED}✗${NC} $1"; errors=$((errors+1)); }
+skip() { echo -e "  ${NC}⚠${NC} $1"; }
+
+echo "--- Pre-push checks ---"
+
+# 1. Lua syntax check on all Lua files
+if command -v luac5.4 &>/dev/null; then
+  while IFS= read -r f; do
+    luac5.4 -p "$f" 2>/dev/null || fail "Lua syntax: $f"
+  done < <(find . -name '*.lua' -not -path './.data/*' -not -path './.git/*')
+  if [ "$errors" -eq 0 ]; then pass "Lua syntax"; fi
+else
+  skip "luac5.4 not installed, skipping syntax check"
+fi
+
+# 2. StyLua format check (only on staged files)
+if command -v stylua &>/dev/null; then
+  CHANGED_LUA=$(git diff --name-only --cached --diff-filter=ACMR \
+    | grep -E '\.lua$' \
+    | grep -v '\.data/' || true)
+  if [ -n "$CHANGED_LUA" ]; then
+    for f in $CHANGED_LUA; do
+      [ -f "$f" ] || continue
+      stylua --check "$f" 2>/dev/null || fail "Formatting: $f (run 'stylua $f')"
+    done
+  fi
+  if [ "$errors" -eq 0 ]; then pass "StyLua format"; fi
+else
+  skip "stylua not installed, skipping format check"
+fi
+
+# 3. Duplicate leader keymap check
+dups=$(grep -rohP "<leader>\w+" --include='*.lua' . 2>/dev/null \
+  | sort | uniq -d) || true
+if [ -n "$dups" ]; then
+  fail "Duplicate leader keymaps:"
+  echo "$dups"
+else
+  pass "No duplicate keymaps"
+fi
+
+# Summary
+echo "---"
+if [ "$errors" -gt 0 ]; then
+  echo -e "${RED}$errors check(s) failed — push aborted${NC}"
+  exit 1
+else
+  echo -e "${GREEN}All checks passed${NC}"
+  exit 0
+fi

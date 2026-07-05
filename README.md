@@ -17,6 +17,8 @@ Personal Neovim configuration for full-stack development with **PHP**, **Rust**,
 | **Git** | Neogit + gitsigns + diffview |
 | **AI Assistant** | opencode.nvim (big-pickle model) |
 | **Theme** | tokyonight (night/day toggle) |
+| **Auto-reload** | Config auto-sources on save |
+| **Pre-push hooks** | Lua syntax, formatting, keymap checks |
 
 ## Requirements
 
@@ -86,14 +88,25 @@ curl -fsSL https://opencode.ai/install | bash
 | `<leader>s.` | Recent files |
 | `<leader>/` | Fuzzily search in buffer |
 
+### Lazy (Plugin Manager)
+
+| Key | Action |
+|-----|--------|
+| `<leader>ll` | Open lazy.nvim UI |
+| `<leader>lc` | Check for updates |
+| `<leader>lu` | Update plugins |
+| `<leader>ls` | Sync plugins |
+| `<leader>lC` | Clean unused plugins |
+| `<leader>lr` | Reload config |
+
 ### Git
 
 | Key | Action |
 |-----|--------|
-| `<leader>gg` | Neogit status |
+| `<leader>gg` | Lazygit (terminal UI) |
+| `<leader>gs` | Neogit status |
 | `<leader>ga` | Git add all |
 | `<leader>gd` | Diffview (diffs/conflicts) |
-| `<leader>gs` | Telescope git status |
 | `<leader>gc` | Telescope git commits |
 | `<leader>gb` | Telescope git branches |
 | `]c` / `[c` | Next/prev git hunk |
@@ -119,6 +132,14 @@ curl -fsSL https://opencode.ai/install | bash
 | `<leader>oa` | Ask opencode |
 | `<leader>os` | Select opencode action |
 | `go` | Append range to opencode |
+
+### File Explorer
+
+| Key | Action |
+|-----|--------|
+| `<leader>e` | Toggle neo-tree (left side) |
+
+Neo-tree opens automatically on the left when Neovim starts without arguments.
 
 ### UI
 
@@ -159,6 +180,6 @@ curl -fsSL https://opencode.ai/install | bash
 ## Customizing
 
 - **Add a language**: Add LSP server, formatter, linter, and treesitter parser in `init.lua`
-- **Add plugins**: Create a file in `lua/custom/plugins/` — it loads automatically
+- **Add plugins**: Create a file in `lua/plugins/` — it loads automatically
 - **Change keymaps**: Find the relevant section in `init.lua` and edit the key
 - **Toggle features**: Comment out plugin imports in the lazy setup block

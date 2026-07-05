@@ -11,7 +11,7 @@ return {
   },
   lazy = false,
   keys = {
-    { '<leader>e', ':Neotree position=left reveal<CR>', desc = '[E]xplorer', silent = true },
+    { '<leader>e', ':Neotree position=left reveal<CR>', desc = '[E]xplorer', icon = '󰙅', silent = true },
   },
   opts = {
     default_component_configs = {

@@ -126,18 +126,18 @@ vim.o.confirm = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uickfix list' })
 
 -- Lazy.nvim commands
-vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = '[L]azy [O]pen' })
-vim.keymap.set('n', '<leader>lc', '<cmd>Lazy check<CR>', { desc = '[L]azy [C]heck updates' })
-vim.keymap.set('n', '<leader>lu', '<cmd>Lazy update<CR>', { desc = '[L]azy [U]pdate' })
-vim.keymap.set('n', '<leader>ls', '<cmd>Lazy sync<CR>', { desc = '[L]azy [S]ync' })
-vim.keymap.set('n', '<leader>lC', '<cmd>Lazy clean<CR>', { desc = '[L]azy [C]lean' })
-vim.keymap.set('n', '<leader>lr', '<cmd>Lazy reload<CR>', { desc = '[L]azy [R]eload' })
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = '[L]azy [O]pen', icon = '󰒲' })
+vim.keymap.set('n', '<leader>lc', '<cmd>Lazy check<CR>', { desc = '[L]azy [C]heck', icon = '󰑐' })
+vim.keymap.set('n', '<leader>lu', '<cmd>Lazy update<CR>', { desc = '[L]azy [U]pdate', icon = '󱋱' })
+vim.keymap.set('n', '<leader>ls', '<cmd>Lazy sync<CR>', { desc = '[L]azy [S]ync', icon = '󰔄' })
+vim.keymap.set('n', '<leader>lC', '<cmd>Lazy clean<CR>', { desc = '[L]azy [C]lean', icon = '󰃛' })
+vim.keymap.set('n', '<leader>lr', '<cmd>Lazy reload<CR>', { desc = '[L]azy [R]eload', icon = '󰑐' })
 
 -- Open lazygit in a new tab
-vim.keymap.set('n', '<leader>gg', '<cmd>tab term lazygit<CR>', { desc = '[G]it [G]ui (lazygit)' })
+vim.keymap.set('n', '<leader>gg', '<cmd>tab term lazygit<CR>', { desc = '[G]it [G]ui (lazygit)', icon = '' })
 
 
 
@@ -462,17 +462,17 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-      vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[B]uffers' })
+      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files', icon = '󰍉' })
+      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers', icon = '󰍉' })
+      vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[B]uffers', icon = '󰍉' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -979,7 +979,7 @@ require('lazy').setup({
           vim.cmd.colorscheme 'tokyonight-night'
           vim.notify('Theme: tokyonight-night (dark)')
         end
-      end, { desc = '[U]I Toggle theme (night/day)' })
+      end, { desc = '[U]I Toggle theme (night/day)', icon = '󰔎' })
     end,
   },
 

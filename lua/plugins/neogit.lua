@@ -20,8 +20,8 @@ return {
       'sindrets/diffview.nvim',
     },
     keys = {
-      { '<leader>gs', function() require('neogit').open() end, desc = '[G]it [S]tatus (Neogit)' },
-      { '<leader>ga', function() require('neogit').action('stage_all') end, desc = '[G]it [A]dd all' },
+      { '<leader>gs', function() require('neogit').open() end, desc = '[G]it [S]tatus (Neogit)', icon = '' },
+      { '<leader>ga', function() require('neogit').action('stage_all') end, desc = '[G]it [A]dd all', icon = '' },
     },
     opts = {
       integrations = {
@@ -32,7 +32,7 @@ return {
   {
     'sindrets/diffview.nvim',
     keys = {
-      { '<leader>gd', function() require('diffview').open() end, desc = '[G]it [D]iff (Diffview)' },
+      { '<leader>gd', function() require('diffview').open() end, desc = '[G]it [D]iff (Diffview)', icon = '' },
     },
     opts = {},
   },

@@ -122,8 +122,8 @@ curl -fsSL https://opencode.ai/install | bash
 | `<F2>` | Step over |
 | `<F3>` | Step out |
 | `<F7>` | Toggle DAP UI |
-| `<leader>b` | Toggle breakpoint |
-| `<leader>B` | Set conditional breakpoint |
+| `<leader>db` | Toggle breakpoint |
+| `<leader>dB` | Set conditional breakpoint |
 
 ### Opencode (AI)
 

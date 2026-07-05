@@ -43,13 +43,29 @@ else
   skip "stylua not installed, skipping format check"
 fi
 
-# 3. Duplicate leader keymap check
-dups=$(grep -rohP "<leader>\w+" --include='*.lua' . 2>/dev/null \
-  | sort | uniq -d) || true
+# 3. Duplicate leader keymap check (skip comments, which-key groups, buffer-local, and gitsigns)
+dups=$(
+  {
+    # vim.keymap.set calls: extract exact key strings
+    grep -rnP "vim\.keymap\.set\(['\"]([nvisox])['\"],\s*'<leader>\w+'" --include='*.lua' . 2>/dev/null \
+      | grep -oP "'<leader>\w+'" \
+      | sort
+    # lazy.nvim keys tables: find '<leader>...' entries (skip vim.keymap.set lines)
+    grep -rnP "'<leader>\w+'" --include='*.lua' . 2>/dev/null \
+      | grep -v "vim.keymap.set" \
+      | sed 's/^[^:]*:[^:]*://' \
+      | grep -vP '^\s*(--|\[)' \
+      | grep -vP "group\s*=" \
+      | grep -v "gitsigns" \
+      | grep -oP "'<leader>\w+'" \
+      | sort
+  } | sort | uniq -d
+)
 if [ -n "$dups" ]; then
   fail "Duplicate leader keymaps:"
   echo "$dups"
-else
+fi
+if [ "$errors" -eq 0 ]; then
   pass "No duplicate keymaps"
 fi
 

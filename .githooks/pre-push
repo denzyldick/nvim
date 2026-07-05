@@ -55,6 +55,7 @@ dups=$(
       | grep -v "vim.keymap.set" \
       | sed 's/^[^:]*:[^:]*://' \
       | grep -vP '^\s*(--|\[)' \
+      | grep -vP "icon\s*=" \
       | grep -vP "group\s*=" \
       | grep -v "gitsigns" \
       | grep -oP "'<leader>\w+'" \

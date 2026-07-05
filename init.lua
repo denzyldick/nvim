@@ -1057,17 +1057,9 @@ require('lazy').setup({
   },
 
   -- Optional Plugins
-  --   Each file in lua/kickstart/plugins/ adds specific functionality
-  --   To disable any, comment out the line below
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns',
-
-  -- Custom plugins — add files to lua/custom/plugins/*.lua, they load automatically
-  { import = 'custom.plugins' },
+  --   Each file in lua/plugins/ adds specific functionality
+  --   To disable any, comment out the file or its content
+  { import = 'plugins' },
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`

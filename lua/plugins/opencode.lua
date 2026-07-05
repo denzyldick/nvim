@@ -11,13 +11,27 @@
 --   <leader>os  Select opencode action from menu
 
 return {
-  'nickjvandyke/opencode.nvim',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-  },
-  keys = {
-    { '<leader>oa', function() require('opencode').ask('@this: ') end, desc = '[O]pencode [A]sk', mode = { 'n', 'x' } },
-    { '<leader>os', function() require('opencode').select() end, desc = '[O]pencode [S]elect', mode = { 'n', 'x' } },
-  },
-  -- no setup() needed — plugin is configured via keymaps and opencode.json
+	"nickjvandyke/opencode.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+	},
+	keys = {
+		{
+			"<leader>oa",
+			function()
+				require("opencode").ask("@this: ")
+			end,
+			desc = "[O]pencode [A]sk",
+			mode = { "n", "x" },
+		},
+		{
+			"<leader>os",
+			function()
+				require("opencode").select()
+			end,
+			desc = "[O]pencode [S]elect",
+			mode = { "n", "x" },
+		},
+	},
+	-- no setup() needed — plugin is configured via keymaps and opencode.json
 }

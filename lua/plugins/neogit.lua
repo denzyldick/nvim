@@ -13,27 +13,45 @@
 --   4. Save resolved files and run :DiffviewClose
 
 return {
-  {
-    'NeogitOrg/neogit',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
-    },
-    keys = {
-      { '<leader>gs', function() require('neogit').open() end, desc = '[G]it [S]tatus (Neogit)' },
-      { '<leader>ga', function() require('neogit').action('stage_all') end, desc = '[G]it [A]dd all' },
-    },
-    opts = {
-      integrations = {
-        diffview = true,
-      },
-    },
-  },
-  {
-    'sindrets/diffview.nvim',
-    keys = {
-      { '<leader>gd', function() require('diffview').open() end, desc = '[G]it [D]iff (Diffview)' },
-    },
-    opts = {},
-  },
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		keys = {
+			{
+				"<leader>gs",
+				function()
+					require("neogit").open()
+				end,
+				desc = "[G]it [S]tatus (Neogit)",
+			},
+			{
+				"<leader>ga",
+				function()
+					require("neogit").action("stage_all")
+				end,
+				desc = "[G]it [A]dd all",
+			},
+		},
+		opts = {
+			integrations = {
+				diffview = true,
+			},
+		},
+	},
+	{
+		"sindrets/diffview.nvim",
+		keys = {
+			{
+				"<leader>gd",
+				function()
+					require("diffview").open()
+				end,
+				desc = "[G]it [D]iff (Diffview)",
+			},
+		},
+		opts = {},
+	},
 }

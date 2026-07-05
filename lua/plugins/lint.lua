@@ -6,49 +6,49 @@
 --   3. Restart Neovim
 
 return {
-  {
-    'mfussenegger/nvim-lint',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      local lint = require 'lint'
+	{
+		"mfussenegger/nvim-lint",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local lint = require("lint")
 
-      -- Configure linters by filetype
-      --   Format: filetype = { 'linter-name' }
-      --   Run :Mason to see available linters
-      lint.linters_by_ft = {
-        markdown = { 'markdownlint' },
+			-- Configure linters by filetype
+			--   Format: filetype = { 'linter-name' }
+			--   Run :Mason to see available linters
+			lint.linters_by_ft = {
+				markdown = { "markdownlint" },
 
-        -- JavaScript / TypeScript / Vue
-        javascript = { 'eslint_d' },
-        typescript = { 'eslint_d' },
-        javascriptreact = { 'eslint_d' },
-        typescriptreact = { 'eslint_d' },
-        vue = { 'eslint_d' },
+				-- JavaScript / TypeScript / Vue
+				javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
+				vue = { "eslint_d" },
 
-        -- Add more linters here:
-        -- python = { 'pylint' },
-        -- ruby = { 'rubocop' },
-        -- json = { 'jsonlint' },
-        -- css = { 'stylelint' },
-        -- go = { 'golangci-lint' },
-        -- rust = { 'clippy' },
-      }
+				-- Add more linters here:
+				-- python = { 'pylint' },
+				-- ruby = { 'rubocop' },
+				-- json = { 'jsonlint' },
+				-- css = { 'stylelint' },
+				-- go = { 'golangci-lint' },
+				-- rust = { 'clippy' },
+			}
 
-      -- PHP — only set if mago binary is available (auto-installed on VimEnter)
-      if vim.fn.executable('mago') ~= 0 then
-        lint.linters_by_ft.php = { 'mago_lint' }
-      end
+			-- PHP — only set if mago binary is available (auto-installed on VimEnter)
+			if vim.fn.executable("mago") ~= 0 then
+				lint.linters_by_ft.php = { "mago_lint" }
+			end
 
-      -- Run linter on BufEnter, BufWritePost, and InsertLeave
-      local lint_augroup = vim.api.nvim_create_augroup('nvim-lint', { clear = true })
-      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
-        group = lint_augroup,
-        callback = function()
-          if vim.bo.modifiable then
-            lint.try_lint()
-          end
-        end,
-      })
-    end,
-  },
+			-- Run linter on BufEnter, BufWritePost, and InsertLeave
+			local lint_augroup = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+				group = lint_augroup,
+				callback = function()
+					if vim.bo.modifiable then
+						lint.try_lint()
+					end
+				end,
+			})
+		end,
+	},
 }

@@ -179,18 +179,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end,
 })
 
--- Auto-update plugins on boot — silently checks for updates and notifies
-vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Check for plugin updates on startup',
-  group = vim.api.nvim_create_augroup('nvim-auto-update', { clear = true }),
-  once = true,
-  callback = function()
-    vim.schedule(function()
-      require('lazy').check()
-    end)
-  end,
-})
-
 -- Auto-install external tools not available in Mason's registry
 --   Only runs if the tool is missing AND curl is available
 vim.api.nvim_create_autocmd('VimEnter', {

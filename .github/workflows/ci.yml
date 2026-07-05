@@ -185,7 +185,7 @@ jobs:
           # phpantom_lsp
           echo "::group::phpantom_lsp"
           if command -v cargo &>/dev/null; then
-            cargo install phpantom_lsp --locked 2>&1
+            cargo install phpantom_lsp --locked --force 2>&1
             export PATH="$HOME/.cargo/bin:$PATH"
             phpantom_lsp --version 2>&1 && echo "✓ phpantom_lsp binary works"
             printf '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{},"rootUri":null}}\r\n' \

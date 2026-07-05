@@ -117,6 +117,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Open lazy.nvim plugin manager
+vim.keymap.set('n', '<leader>l', '<cmd>Lazy<CR>', { desc = '[L]azy.nvim' })
+
+-- Open lazygit in a new tab
 vim.keymap.set('n', '<leader>gg', '<cmd>tab term lazygit<CR>', { desc = '[G]it [G]ui (lazygit)' })
 
 

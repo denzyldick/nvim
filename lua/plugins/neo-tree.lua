@@ -18,6 +18,7 @@ return {
 			icon_padding = " ",
 		},
 		filesystem = {
+			hijack_netrw_behavior = "disabled",
 			window = {
 				mappings = {
 					["<leader>e"] = "close_window",

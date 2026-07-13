@@ -30,6 +30,10 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Disable netrw (replaced by neo-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Use tracked git hooks from .githooks/ (pre-push checks)
 vim.api.nvim_create_autocmd("VimEnter", {
 	desc = "Configure git hooks path",
@@ -401,25 +405,76 @@ require("lazy").setup({
 				{ "<leader>d", group = "[D]ebug" },
 				{ "<leader>o", group = "[O]pencode" },
 				{ "<leader>u", group = "[U]I" },
+				{ "<leader>m", group = "[M]arkdown" },
+				{ "<leader>q", group = "[Q]uickfix" },
+				{ "<leader>b", group = "[B]uffer" },
+				{ "<leader>c", group = "[C]ode" },
+				{ "<leader>x", group = "[X]iagnostics (trouble)" },
 
 				-- Individual entries with icons (metadata only, keymaps defined elsewhere)
 				{ "<leader>e", desc = "[E]xplorer", icon = "󰙅" },
+				{ "<leader>/", desc = "[/] Fuzzy search buffer", icon = "󰈞" },
+				{ "<leader><leader>", desc = "[ ] Find buffers", icon = "󰈙" },
 				{ "<leader>ll", desc = "[L]azy [O]pen", icon = "󰒲" },
 				{ "<leader>lc", desc = "[L]azy [C]heck", icon = "󰑐" },
 				{ "<leader>lu", desc = "[L]azy [U]pdate", icon = "󱋱" },
 				{ "<leader>ls", desc = "[L]azy [S]ync", icon = "󰔄" },
 				{ "<leader>lC", desc = "[L]azy [C]lean", icon = "󰃛" },
 				{ "<leader>lr", desc = "[L]azy [R]eload", icon = "󰑐" },
-				{ "<leader>gg", desc = "[G]it [G]ui (lazygit)", icon = "" },
-				{ "<leader>gs", desc = "[G]it [S]tatus (Neogit)", icon = "" },
-				{ "<leader>ga", desc = "[G]it [A]dd all", icon = "" },
-				{ "<leader>gd", desc = "[G]it [D]iff (Diffview)", icon = "" },
+				{ "<leader>gg", desc = "[G]it [G]ui (lazygit)", icon = "" },
+				{ "<leader>gs", desc = "[G]it [S]tatus (Neogit)", icon = "" },
+				{ "<leader>ga", desc = "[G]it [A]dd all", icon = "" },
+				{ "<leader>gd", desc = "[G]it [D]iff (Diffview)", icon = "" },
 				{ "<leader>db", desc = "[D]ebug [B]reakpoint", icon = "󰃤" },
 				{ "<leader>dB", desc = "[D]ebug [B]reakpoint (cond)", icon = "󰃤" },
 				{ "<leader>oa", desc = "[O]pencode [A]sk", icon = "󰚩" },
 				{ "<leader>os", desc = "[O]pencode [S]elect", icon = "󰚩" },
 				{ "<leader>u", desc = "[U]I Toggle theme", icon = "󰔎" },
 				{ "<leader>f", desc = "[F]ormat buffer", icon = "󰅫" },
+				{ "<leader>mp", desc = "[M]arkdown [P]review", icon = "󰈙" },
+				{ "<leader>q", desc = "[Q]uickfix list", icon = "󰁪" },
+				{ "<leader>sh", desc = "[S]earch [H]elp", icon = "󰈙" },
+				{ "<leader>sk", desc = "[S]earch [K]eymaps", icon = "󰓫" },
+				{ "<leader>sf", desc = "[S]earch [F]iles", icon = "󰈞" },
+				{ "<leader>ss", desc = "[S]earch [S]elect Telescope", icon = "󰈙" },
+				{ "<leader>sw", desc = "[S]earch current [W]ord", icon = "󰈙" },
+				{ "<leader>sg", desc = "[S]earch by [G]rep", icon = "󰈙" },
+				{ "<leader>sd", desc = "[S]earch [D]iagnostics", icon = "󰈙" },
+				{ "<leader>sr", desc = "[S]earch [R]esume", icon = "󰈙" },
+				{ "<leader>s.", desc = "[S]earch Recent Files", icon = "󰈙" },
+				{ "<leader>s/", desc = "[S]earch [/] in Open Files", icon = "󰈙" },
+				{ "<leader>sn", desc = "[S]earch [N]eovim files", icon = "󰈙" },
+				{ "<leader>hs", desc = "git [s]tage hunk", icon = "", mode = { "n", "v" } },
+				{ "<leader>hr", desc = "git [r]eset hunk", icon = "", mode = { "n", "v" } },
+				{ "<leader>hS", desc = "git [S]tage buffer", icon = "" },
+				{ "<leader>hu", desc = "git [u]ndo stage hunk", icon = "" },
+				{ "<leader>hR", desc = "git [R]eset buffer", icon = "" },
+				{ "<leader>hp", desc = "git [p]review hunk", icon = "" },
+				{ "<leader>hb", desc = "git [b]lame line", icon = "" },
+				{ "<leader>hd", desc = "git [d]iff against index", icon = "" },
+				{ "<leader>hD", desc = "git [D]iff against last commit", icon = "" },
+				{ "<leader>tb", desc = "[T]oggle git [b]lame", icon = "" },
+				{ "<leader>tD", desc = "[T]oggle git [D]eleted", icon = "" },
+				{ "<leader>to", desc = "[T]S [O]rganize imports", icon = "" },
+				{ "<leader>ti", desc = "[T]S add [I]mports", icon = "" },
+				{ "<leader>tr", desc = "[T]S [R]ename file + imports", icon = "" },
+				{ "<leader>tf", desc = "[T]S [F]ix all", icon = "" },
+				{ "<leader>tu", desc = "[T]S remove [U]nused imports", icon = "" },
+				{ "<leader>ts", desc = "[T]S [S]ort imports", icon = "" },
+				{ "<leader>tc", desc = "[T]S file [C]ommand", icon = "" },
+
+				{ "<leader>tt", desc = "[T]oggle [T]erminal (float)", icon = "" },
+				{ "<leader>th", desc = "[T]oggle [H]orizontal terminal", icon = "" },
+				{ "<leader>tv", desc = "[T]oggle [V]ertical terminal", icon = "" },
+				{ "<leader>xx", desc = "[X] Diagnostics (Trouble)", icon = "" },
+				{ "<leader>xb", desc = "[X] Buffer diagnostics", icon = "" },
+				{ "<leader>xq", desc = "[X] Quickfix list", icon = "" },
+				{ "<leader>xl", desc = "[X] Location list", icon = "" },
+				{ "<leader>xs", desc = "[X] Document symbols", icon = "" },
+				{ "<leader>sy", desc = "[S]earch [Y]ank history", icon = "󰉼" },
+				{ "<leader>ca", desc = "[C]ode [A]erial outline", icon = "" },
+				{ "<leader>cs", desc = "[C]ode [S]ymbols nav", icon = "" },
+				{ "-", desc = "Oil: parent directory", icon = "" },
 			},
 		},
 	},
@@ -779,8 +834,7 @@ require("lazy").setup({
 				-- Rust
 				rust_analyzer = {},
 
-				-- JavaScript / TypeScript
-				ts_ls = {},
+				-- JavaScript / TypeScript (handled by typescript-tools.nvim plugin)
 
 				-- Vue.js
 				volar = {},
@@ -812,7 +866,6 @@ require("lazy").setup({
 			local lsp_to_mason = {
 				lua_ls = "lua-language-server",
 				rust_analyzer = "rust-analyzer",
-				ts_ls = "typescript-language-server",
 				volar = "vue-language-server",
 			}
 			ensure_installed = vim.tbl_map(function(name)
@@ -1063,17 +1116,10 @@ require("lazy").setup({
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,
 			--  and try some other statusline plugin
-			local statusline = require("mini.statusline")
-			-- set use_icons to true if you have a Nerd Font
-			statusline.setup({ use_icons = vim.g.have_nerd_font })
+			require("mini.statusline").setup({ use_icons = vim.g.have_nerd_font })
 
-			-- You can configure sections in the statusline by overriding their
-			-- default behavior. For example, here we set the section for
-			-- cursor location to LINE:COLUMN
-			---@diagnostic disable-next-line: duplicate-set-field
-			statusline.section_location = function()
-				return "%2l:%-2v"
-			end
+			-- Bracketed navigation ([b, ]b, [q, ]q, etc.)
+			require("mini.bracketed").setup()
 
 			-- ... and there is more!
 			--  Check out: https://github.com/echasnovski/mini.nvim
